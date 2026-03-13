@@ -1,211 +1,192 @@
-# Hexagonal Architecture Blueprint
+# Software Architect
 
-This repository contains the Hexagonal Architecture blueprint used by the AI Software Architect ecosystem.
+Software Architect is the main repository of the AI Software Architect organization.
 
-Hexagonal Architecture (also known as Ports and Adapters) separates business logic from external systems and frameworks.
+It provides architecture blueprints, stack-specific rules, LLM usage guides, and examples that help AI coding assistants generate software with consistent architectural boundaries.
 
-The goal is to help AI agents generate applications with clear boundaries between:
-
-- domain logic
-- application use cases
-- external adapters
-- infrastructure concerns
+The goal is to let tools such as Claude, Codex, and others consult a software architecture specialist before generating code.
 
 ---
 
-## Architecture Overview
+## What This Repository Contains
 
-Hexagonal Architecture separates the system into four main areas:
+This repository is organized around four dimensions:
 
-```
-domain/
+- architecture blueprints
+- technology stacks
+- LLM usage guides
+- example projects
 
-application/
-  port/in
-  port/out
-  interactor
+This allows the project to combine concerns such as:
 
-adapter/
-  in
-  out
+- Hexagonal Architecture + Java Spring
+- Onion Architecture + Java Spring
+- MVP + Vue
+- future combinations across multiple stacks and models
 
-infrastructure/
+---
+
+## Repository Structure
+
+```text
+software-architect
+├─ README.md
+├─ docs/
+├─ core/
+├─ blueprints/
+│  ├─ architectures/
+│  ├─ stacks/
+│  └─ compositions/
+├─ llms/
+├─ examples/
+└─ scripts/
 ```
 
 ---
 
-## Domain Layer
+## Why The Repository Is Structured This Way
 
-The domain layer contains the core business concepts.
+A software generation request usually combines multiple dimensions:
+
+1. an architectural style  
+2. a technology stack  
+3. an LLM-specific usage mode  
+
+For example:
+
+- generate a feature using Hexagonal Architecture
+- for a Java Spring project
+- using Codex or Claude
+
+Because of that, this repository does not use only architecture or only stack as the top-level structure.
+
+Instead, it separates reusable concerns and allows them to be composed.
+
+---
+
+## Blueprints
+
+The `blueprints` directory contains the reusable architecture and stack definitions.
+
+### Architectures
 
 Examples:
 
-- entities
-- value objects
-- domain services
+- `hexagonal`
+- `onion`
+- `clean`
+- `mvc`
+- `mvp`
+- `mvvm`
 
-Rules:
+Each architecture blueprint defines:
 
-- must not depend on frameworks
-- must not depend on adapters
-- must not depend on infrastructure
+- philosophy
+- boundaries
+- naming conventions
+- architecture rules
+- templates
+- validation rules
 
----
-
-## Application Layer
-
-The application layer contains use cases and ports.
-
-```
-application/
-  port/in
-  port/out
-  interactor
-```
-
-### Input Ports
-
-Input ports define system capabilities.
-
-Example:
-
-```
-CreateTaskUseCase
-```
-
-### Interactors
-
-Interactors implement input ports and orchestrate domain logic.
-
-Example:
-
-```
-CreateTaskInteractor
-```
-
-### Output Ports
-
-Output ports define dependencies required by the application.
-
-Example:
-
-```
-SaveTaskPort
-```
-
----
-
-## Adapters
-
-Adapters connect the application to external systems.
+### Stacks
 
 Examples:
 
-```
-adapter/in/web
-adapter/out/persistence
-```
+- `java/common`
+- `java/spring`
+- `java/spark`
+- `vue`
+- `node`
+- `python`
 
-Typical adapters include:
+Each stack definition provides language and framework-specific guidance.
 
-- HTTP controllers
-- database adapters
-- messaging integrations
+### Compositions
 
-Adapters translate external protocols into application calls.
+Compositions combine an architecture with a stack.
+
+Example:
+
+- `hexagonal-java-spring`
+
+This is the most direct entry point for an AI assistant that already knows the desired architecture and stack.
 
 ---
 
-## Infrastructure
+## LLM Guides
 
-Infrastructure contains framework configuration and bootstrapping.
+The `llms` directory contains guidance for using this repository with different models.
+
+Structure:
+
+- `llms/common`
+- `llms/claude`
+- `llms/codex`
+
+### Common Rules
+
+Common rules include:
+
+- plan before coding
+- follow architecture boundaries
+- prefer contracts over concrete dependencies
+- generate tests when architecture rules require them
+
+### Model-Specific Rules
+
+Model-specific guides adapt the common rules to each tool's workflow and prompting style.
+
+---
+
+## Core Components
+
+The `core` directory contains the conceptual engine of the project.
 
 Examples:
 
-- Spring Boot configuration
-- dependency wiring
-- application entry point
+- `project-classifier`
+- `blueprint-resolver`
+- `feature-planner`
+- `architecture-reviewer`
 
-Infrastructure must not contain business logic.
-
----
-
-## Naming Conventions
-
-Input Port
-
-```
-CreateTaskUseCase
-```
-
-Implementation
-
-```
-CreateTaskInteractor
-```
-
-Output Port
-
-```
-SaveTaskPort
-```
-
-Adapters
-
-```
-TaskController
-TaskPersistenceAdapter
-```
+These components define how an agent should reason before generating code.
 
 ---
 
-## Example Feature
+## Example Request Flow
 
-Feature: Create Task
+A typical request may look like this:
 
-Generated components:
+> Create a TODO application in Java Spring using Hexagonal Architecture.
 
-```
-domain/task/Task.java
+The expected flow is:
 
-application/port/in/CreateTaskUseCase.java
-application/interactor/CreateTaskInteractor.java
-
-application/port/out/SaveTaskPort.java
-
-adapter/in/web/TaskController.java
-
-adapter/out/persistence/TaskPersistenceAdapter.java
-```
+1. detect the stack  
+2. select the architecture blueprint  
+3. resolve the correct composition  
+4. apply common and model-specific rules  
+5. generate the plan  
+6. generate the code  
+7. validate architecture constraints  
 
 ---
 
-## Architecture Validation
+## Initial Focus
 
-Projects generated using this blueprint can enforce architecture rules using tools such as ArchUnit.
+The initial focus of the repository is:
 
-Typical rules:
-
-- domain must not depend on adapters
-- application must not depend on infrastructure
-- adapters must depend on ports
-
-These checks prevent architectural drift over time.
+- Hexagonal Architecture
+- Java + Spring
+- Claude and Codex usage guides
+- architecture validation with ArchUnit
+- examples that can be reused by AI tools
 
 ---
 
-## Using This Blueprint with AI
+## Vision
 
-Example prompt:
+AI should not generate random architecture.
 
-Use the hexagonal architecture blueprint from the AI Software Architect organization.
+AI should generate software using explicit architectural blueprints, stack-aware rules, and clear boundaries.
 
-Generate a TODO application using Java and Spring Boot following the architecture rules defined in the repository.
-
-The AI should:
-
-1. load architecture rules
-2. apply folder structure
-3. follow naming conventions
-4. generate ports, interactors, and adapters
-5. respect architectural boundaries
+That is the purpose of Software Architect.
