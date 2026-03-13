@@ -2,51 +2,35 @@
 
 This directory contains generated Codex-ready artifacts.
 
-These files are intended to be copied into other repositories.
+These files are intended to be installed into Codex globally or into a specific repository.
 
-## Why `dist/` Is Versioned
+## Available Distribution Types
 
-The `dist/` directory is part of the product.
+### Global
 
-It is intentionally committed so users can copy the generated artifacts directly without having to run local build steps first.
+- `global/AGENTS.md`
+- `global/skills/software-architect-hexagonal-java-spring/`
 
-## Available Distributions In The MVP
+These are meant to be installed into:
 
-- `greenfield-java-spring-hexagonal/`
-- `brownfield-java-spring-hexagonal/`
+- `~/.codex/AGENTS.md`
+- `$HOME/.agents/skills/software-architect-hexagonal-java-spring/`
 
-Each distribution contains an `AGENTS.md` file ready to be placed at the root of a target repository.
+### Project-local
 
-## How To Use
+- `greenfield-java-spring-hexagonal/AGENTS.override.md`
+- `brownfield-java-spring-hexagonal/AGENTS.override.md`
 
-### New Project
+These are meant to be installed into:
 
-Copy:
+- `<repo>/AGENTS.override.md`
 
-`dist/codex/greenfield-java-spring-hexagonal/AGENTS.md`
+with the skill copied into:
 
-to:
+- `<repo>/.agents/skills/software-architect-hexagonal-java-spring/`
 
-`<target-repo>/AGENTS.md`
+## Privacy
 
-Then open Codex in the target repository and ask:
+The recommended project-local installer hides local Codex files via `.git/info/exclude` instead of modifying `.gitignore`.
 
-Create a TODO application in Java with Spring Boot.
-
-### Existing Project
-
-Copy:
-
-`dist/codex/brownfield-java-spring-hexagonal/AGENTS.md`
-
-to:
-
-`<target-repo>/AGENTS.md`
-
-Then open Codex in the target repository and ask:
-
-Add a Task feature to this project.
-
-## Rebuilding
-
-If the source blueprints, compositions, or Codex overlays change, regenerate these artifacts using the build scripts in `scripts/`.
+This avoids committing AI-related setup to the repository unless the user chooses to do so.

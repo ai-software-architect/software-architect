@@ -20,13 +20,28 @@ infrastructure/
   config
 ```
 
+## Required Conventions
+
+- use `adapter/`, not `adapters/`
+- use `application/interactor/`, not `application/usecase/`
+
 ## Naming
 
-- input port interface: `CreateTaskUseCase`
-- input port implementation: `CreateTaskInteractor`
-- output port interface: `SaveTaskPort`
-- input adapter: `TaskController`
-- output adapter: `TaskPersistenceAdapter`
+- input port interface: `CreateTodoUseCase`
+- input port implementation: `CreateTodoInteractor`
+- output port interface: `SaveTodoPort`
+- input adapter: `TodoController`
+- output adapter: `TodoPersistenceAdapter`
+
+## Scope Control
+
+For greenfield TODO applications, prefer a minimal first vertical slice unless the user explicitly asks for a broader initial scope.
+
+The canonical first slice is:
+
+- `CreateTodo`
+
+Do not silently expand to multiple use cases unless asked.
 
 ## Rules
 
