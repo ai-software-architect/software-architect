@@ -2,191 +2,76 @@
 
 Software Architect is the main repository of the AI Software Architect organization.
 
-It provides architecture blueprints, stack-specific rules, LLM usage guides, and examples that help AI coding assistants generate software with consistent architectural boundaries.
+It provides architecture blueprints, stack-specific rules, compositions, agent adapters, and generated distributions that help AI coding assistants work inside other repositories.
 
-The goal is to let tools such as Claude, Codex, and others consult a software architecture specialist before generating code.
+## Important
 
----
+This repository is not the target application repository.
 
-## What This Repository Contains
+It is the source of truth used to generate agent packs and installation artifacts for tools such as Codex.
 
-This repository is organized around four dimensions:
+## MVP Included In This Repository
 
-- architecture blueprints
-- technology stacks
-- LLM usage guides
-- example projects
+This MVP includes one complete path:
 
-This allows the project to combine concerns such as:
+- Architecture: Hexagonal
+- Stack: Java + Spring Boot
+- Modes:
+  - greenfield
+  - brownfield-adaptive
+- Agent adapter:
+  - Codex
 
-- Hexagonal Architecture + Java Spring
-- Onion Architecture + Java Spring
-- MVP + Vue
-- future combinations across multiple stacks and models
+## Main Structure
 
----
+blueprints/  
+compositions/  
+agents/  
+dist/  
+scripts/  
+docs/  
+examples/  
 
-## Repository Structure
+## How To Think About This Repository
 
-```text
-software-architect
-├─ README.md
-├─ docs/
-├─ core/
-├─ blueprints/
-│  ├─ architectures/
-│  ├─ stacks/
-│  └─ compositions/
-├─ llms/
-├─ examples/
-└─ scripts/
-```
+- `blueprints/` contains reusable architecture and stack knowledge
+- `compositions/` combines architecture + stack + mode
+- `agents/` defines how this knowledge becomes agent behavior
+- `dist/` contains generated artifacts ready for use in target repositories
+- `scripts/` builds and installs those artifacts
 
----
+## Quick Start With Codex
 
-## Why The Repository Is Structured This Way
+This repository is meant to guide Codex inside another repository.
 
-A software generation request usually combines multiple dimensions:
+### New Project
 
-1. an architectural style  
-2. a technology stack  
-3. an LLM-specific usage mode  
+1. Create or open the target repository.
+2. Copy `dist/codex/greenfield-java-spring-hexagonal/AGENTS.md` into the root of the target repository as `AGENTS.md`.
+3. Open Codex in the target repository.
+4. Ask Codex normally, for example:
 
-For example:
+Create a TODO application in Java with Spring Boot.
 
-- generate a feature using Hexagonal Architecture
-- for a Java Spring project
-- using Codex or Claude
+Codex should inspect the repository, detect that it is a greenfield project, produce a plan first, and only then generate code.
 
-Because of that, this repository does not use only architecture or only stack as the top-level structure.
+### Existing Project
 
-Instead, it separates reusable concerns and allows them to be composed.
+1. Open the existing target repository.
+2. Copy `dist/codex/brownfield-java-spring-hexagonal/AGENTS.md` into the root of the target repository as `AGENTS.md`.
+3. Open Codex in the target repository.
+4. Ask Codex normally, for example:
 
----
+Add a Task feature to this project.
 
-## Blueprints
+Codex should inspect the repository, detect the stack and current structure, propose an adaptive plan, and only then generate code.
 
-The `blueprints` directory contains the reusable architecture and stack definitions.
+## Generated Distributions
 
-### Architectures
+The `dist/` directory is intentionally versioned.
 
-Examples:
+It contains generated agent artifacts that users can copy directly into target repositories without having to build this project locally.
 
-- `hexagonal`
-- `onion`
-- `clean`
-- `mvc`
-- `mvp`
-- `mvvm`
+## First Goal
 
-Each architecture blueprint defines:
-
-- philosophy
-- boundaries
-- naming conventions
-- architecture rules
-- templates
-- validation rules
-
-### Stacks
-
-Examples:
-
-- `java/common`
-- `java/spring`
-- `java/spark`
-- `vue`
-- `node`
-- `python`
-
-Each stack definition provides language and framework-specific guidance.
-
-### Compositions
-
-Compositions combine an architecture with a stack.
-
-Example:
-
-- `hexagonal-java-spring`
-
-This is the most direct entry point for an AI assistant that already knows the desired architecture and stack.
-
----
-
-## LLM Guides
-
-The `llms` directory contains guidance for using this repository with different models.
-
-Structure:
-
-- `llms/common`
-- `llms/claude`
-- `llms/codex`
-
-### Common Rules
-
-Common rules include:
-
-- plan before coding
-- follow architecture boundaries
-- prefer contracts over concrete dependencies
-- generate tests when architecture rules require them
-
-### Model-Specific Rules
-
-Model-specific guides adapt the common rules to each tool's workflow and prompting style.
-
----
-
-## Core Components
-
-The `core` directory contains the conceptual engine of the project.
-
-Examples:
-
-- `project-classifier`
-- `blueprint-resolver`
-- `feature-planner`
-- `architecture-reviewer`
-
-These components define how an agent should reason before generating code.
-
----
-
-## Example Request Flow
-
-A typical request may look like this:
-
-> Create a TODO application in Java Spring using Hexagonal Architecture.
-
-The expected flow is:
-
-1. detect the stack  
-2. select the architecture blueprint  
-3. resolve the correct composition  
-4. apply common and model-specific rules  
-5. generate the plan  
-6. generate the code  
-7. validate architecture constraints  
-
----
-
-## Initial Focus
-
-The initial focus of the repository is:
-
-- Hexagonal Architecture
-- Java + Spring
-- Claude and Codex usage guides
-- architecture validation with ArchUnit
-- examples that can be reused by AI tools
-
----
-
-## Vision
-
-AI should not generate random architecture.
-
-AI should generate software using explicit architectural blueprints, stack-aware rules, and clear boundaries.
-
-That is the purpose of Software Architect.
+Use the generated Codex `AGENTS.md` files from `dist/` to guide Codex inside another repository.

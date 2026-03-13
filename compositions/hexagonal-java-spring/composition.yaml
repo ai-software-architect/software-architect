@@ -1,0 +1,16 @@
+name: hexagonal-java-spring
+architecture: hexagonal
+stack:
+  language: java
+  framework: spring
+modes:
+  - greenfield
+  - brownfield-adaptive
+includes:
+  - blueprints/architectures/hexagonal
+  - blueprints/stacks/java/common
+  - blueprints/stacks/java/spring
+agent_adapters:
+  - codex
+distribution_targets:
+  - AGENTS.md
